@@ -17,39 +17,41 @@ const AuthForm = () => {
         event.preventDefault();
 
         setIsLoading(true)
+        let URL;
         if (isLogin) {
-            alert('Creat')
+            URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB3uFH6b2LVR7iMNp8Dh1ZTlvy_elJpVIs'
         }
         else {
-            try {
-                const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB3uFH6b2LVR7iMNp8Dh1ZTlvy_elJpVIs', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        email: enteredEmail,
-                        password: Enteredpassword,
-                        returnSecureToken: true
-                    }),
-                    headers: {
-                        'Content-Type': 'applications/json'
-                    }
-                })
-
-                setIsLoading(false)
-
-                if (response.ok) {
-                    console.log(response)
-                } else {
-                    const data = await response.json();
-                    let errroMessage = "Authentication fail!"
-                    if (data && data.error && data.error.message) {
-                        errroMessage = data.error.message;
-                    }
-                    alert(errroMessage)
+            URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB3uFH6b2LVR7iMNp8Dh1ZTlvy_elJpVIs'
+        }
+        try {
+            const response = await fetch(URL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: enteredEmail,
+                    password: Enteredpassword,
+                    returnSecureToken: true
+                }),
+                headers: {
+                    'Content-Type': 'applications/json'
                 }
-            }
-            catch (error) {
+            })
 
+            setIsLoading(false)
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data)
+            } else {
+                const data = await response.json();
+                let errroMessage = "Authentication fail!"
+                if (data && data.error && data.error.message) {
+                    errroMessage = data.error.message;
+                }
+                throw new Error(errroMessage)
             }
+        }
+        catch (error) {
+            alert(error.message)
         }
     }
 
