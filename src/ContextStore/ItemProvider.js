@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 
 export const ItemProviderContext = createContext();
@@ -8,6 +8,15 @@ const ItemProvider = (props) => {
     const InitialToken = localStorage.getItem('token')
     const [token, setToken] = useState(InitialToken);
     const isLoggegIn = !!token;
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            setToken(null);
+            localStorage.removeItem('token');
+        }, 300000)
+
+    }, [])
 
 
     const loginHandler = (token) => {
