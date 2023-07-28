@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import classes from './AuthForm.module.css';
+import { ItemProviderContext } from '../../ContextStore/ItemProvider';
 
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [enteredEmail, setenteredEmail] = useState('');
     const [Enteredpassword, setEnteredpassword] = useState('');
+
+    const tokenCtx = useContext(ItemProviderContext);
+
 
 
     const switchAuthModeHandler = () => {
@@ -15,7 +19,6 @@ const AuthForm = () => {
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
-
         setIsLoading(true)
         let URL;
         if (isLogin) {
@@ -40,7 +43,7 @@ const AuthForm = () => {
             setIsLoading(false)
             if (response.ok) {
                 const data = await response.json();
-                console.log(data)
+                tokenCtx.login(data.idToken)
             } else {
                 const data = await response.json();
                 let errroMessage = "Authentication fail!"
@@ -53,6 +56,8 @@ const AuthForm = () => {
         catch (error) {
             alert(error.message)
         }
+        setenteredEmail('')
+        setEnteredpassword('')
     }
 
 
