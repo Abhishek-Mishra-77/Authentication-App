@@ -20,7 +20,7 @@ const MainNavigation = () => {
                 <ul>
                     {!isLoggegIn &&
                         <li>
-                            <Link to='/auth'>Login</Link>
+                            <Link to='/auth' state={{ isLoggegIn }}>Login</Link>
                         </li>}
                     {isLoggegIn &&
                         <li>

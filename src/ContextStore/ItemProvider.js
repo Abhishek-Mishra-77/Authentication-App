@@ -7,7 +7,6 @@ const ItemProvider = (props) => {
     const [userIsLoggedIn, setuserIsLoggedIn] = useState(false);
 
 
-
     const loginHandler = (token) => {
         setuserIsLoggedIn(true);
         setToken(token);

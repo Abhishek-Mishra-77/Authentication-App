@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ItemProviderContext } from '../../ContextStore/ItemProvider';
 import classes from './ProfileForm.module.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const ProfileForm = () => {
@@ -8,8 +9,9 @@ const ProfileForm = () => {
     const [inputPassword, setInputPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const tokenCtx = useContext(ItemProviderContext);
+    const navigate = useNavigate();
 
-    console.log(tokenCtx)
+
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
@@ -22,7 +24,7 @@ const ProfileForm = () => {
                 body: JSON.stringify({
                     idToken: tokenCtx.token,
                     password: newInputPassword,
-                    returnSecureToken: false
+                    returnSecureToken: true,
                 }),
                 headers: {
                     'Content-type': 'application/json'
@@ -32,6 +34,7 @@ const ProfileForm = () => {
             setIsLoading(false)
             if (response.ok) {
                 const data = await response.json();
+                navigate('/')
             } else {
                 const data = await response.json();
                 let errroMessage = "Authentication fail!"

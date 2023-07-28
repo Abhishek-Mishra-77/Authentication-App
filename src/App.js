@@ -4,24 +4,25 @@ import Layout from './components/Layout/Layout';
 import UserProfile from './components/Profile/UserProfile';
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
-import ItemProvider from './ContextStore/ItemProvider';
-
-
+import PrivateRoutes from './components/Auth/PrivateRoutes/PrivateRoutes';
 
 
 function App() {
+
+
   return (
-    <ItemProvider>
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path='/' element={<HomePage />}></Route>
-            <Route path='/auth' element={<AuthPage />}></Route>
-            <Route path='/profile' element={<UserProfile />}></Route>
-          </Routes>
-        </Layout>
-      </Router>
-    </ItemProvider>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path='/' element={<HomePage />}></Route>
+          <Route path='/auth' element={<AuthPage />}></Route>
+          <Route element={<PrivateRoutes />}>
+            <Route path='profile' element={<UserProfile />}></Route>
+          </Route>
+          <Route path='*' element={<p>Path is Not Match!</p>}/>
+        </Routes>
+      </Layout>
+    </Router>
 
   );
 }

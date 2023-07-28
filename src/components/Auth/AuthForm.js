@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import classes from './AuthForm.module.css';
 import { ItemProviderContext } from '../../ContextStore/ItemProvider';
 
@@ -9,6 +10,7 @@ const AuthForm = () => {
     const [Enteredpassword, setEnteredpassword] = useState('');
 
     const tokenCtx = useContext(ItemProviderContext);
+    const navigate = useNavigate();
 
 
 
@@ -44,6 +46,7 @@ const AuthForm = () => {
             if (response.ok) {
                 const data = await response.json();
                 tokenCtx.login(data.idToken)
+                navigate('/')
             } else {
                 const data = await response.json();
                 let errroMessage = "Authentication fail!"
