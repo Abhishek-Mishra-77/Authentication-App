@@ -8,7 +8,7 @@ const ProfileForm = () => {
 
     const [inputPassword, setInputPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const tokenCtx = useContext(ItemProviderContext);
+    const AuthContext = useContext(ItemProviderContext);
     const navigate = useNavigate();
 
 
@@ -17,12 +17,12 @@ const ProfileForm = () => {
         event.preventDefault();
 
         const newInputPassword = inputPassword;
-       setIsLoading(true)
+        setIsLoading(true)
         try {
             const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyB3uFH6b2LVR7iMNp8Dh1ZTlvy_elJpVIs', {
                 method: 'POST',
                 body: JSON.stringify({
-                    idToken: tokenCtx.token,
+                    idToken: AuthContext.token,
                     password: newInputPassword,
                     returnSecureToken: true,
                 }),

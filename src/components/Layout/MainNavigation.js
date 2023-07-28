@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import classes from './MainNavigation.module.css';
 import { ItemProviderContext } from '../../ContextStore/ItemProvider';
 import { useContext } from 'react';
 
 const MainNavigation = () => {
 
-    const tokenCtx = useContext(ItemProviderContext);
-    const isLoggegIn = tokenCtx.isLoggegIn;
+    const navigate = useNavigate();
 
+    const AuthContext = useContext(ItemProviderContext)
+    const isLoggegIn = AuthContext.isLoggegIn;
+ 
 
 
 
@@ -23,12 +25,12 @@ const MainNavigation = () => {
                             <Link to='/auth' state={{ isLoggegIn }}>Login</Link>
                         </li>}
                     {isLoggegIn &&
-                        <li>
+                        <islogin>
                             <Link to='/profile'>Profile</Link>
-                        </li>}
+                        </islogin>}
                     {isLoggegIn &&
                         <li>
-                            <button onClick={tokenCtx.logout}>Logout</button>
+                            <button onClick={AuthContext.logout}>Logout</button>
                         </li>}
                 </ul>
             </nav>

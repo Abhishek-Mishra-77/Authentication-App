@@ -9,8 +9,8 @@ const AuthForm = () => {
     const [enteredEmail, setenteredEmail] = useState('');
     const [Enteredpassword, setEnteredpassword] = useState('');
 
-    const tokenCtx = useContext(ItemProviderContext);
     const navigate = useNavigate();
+    const AuthContext = useContext(ItemProviderContext);
 
 
 
@@ -45,7 +45,7 @@ const AuthForm = () => {
             setIsLoading(false)
             if (response.ok) {
                 const data = await response.json();
-                tokenCtx.login(data.idToken)
+                AuthContext.login(data.idToken)
                 navigate('/')
             } else {
                 const data = await response.json();
@@ -59,7 +59,6 @@ const AuthForm = () => {
         catch (error) {
             alert(error.message)
         }
-        setenteredEmail('')
         setEnteredpassword('')
     }
 

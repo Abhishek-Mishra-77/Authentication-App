@@ -1,25 +1,28 @@
 import React, { createContext, useState } from 'react';
 
+
 export const ItemProviderContext = createContext();
 
 const ItemProvider = (props) => {
-    const [token, setToken] = useState([]);
-    const [userIsLoggedIn, setuserIsLoggedIn] = useState(false);
+
+    const InitialToken = localStorage.getItem('token')
+    const [token, setToken] = useState(InitialToken);
+    const isLoggegIn = !!token;
 
 
     const loginHandler = (token) => {
-        setuserIsLoggedIn(true);
+        localStorage.setItem('token', token);
         setToken(token);
     }
 
     const logoutHandler = () => {
-        setuserIsLoggedIn(false);
-        setToken([])
+        localStorage.removeItem('token')
+        setToken(null)
     }
 
     const contectValue = {
         token: token,
-        isLoggegIn: userIsLoggedIn,
+        isLoggegIn: isLoggegIn,
         login: loginHandler,
         logout: logoutHandler
     }
